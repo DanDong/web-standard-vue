@@ -24,8 +24,14 @@ const getColor = () => {
   return serve.get('/color')
 }
 
+// 获取颜色配置
+const getSvg = () => {
+  return serve.get('/svg')
+}
+
 export {
   getFile,
   getSideMenu,
-  getColor
+  getColor,
+  getSvg
 }

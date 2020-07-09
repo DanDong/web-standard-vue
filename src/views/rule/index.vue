@@ -39,6 +39,14 @@
             <el-tab-pane v-for="(item, index) in iconInfo" :key="index" :label="item.title" :name="item.code">
               <iframe class="iframe" :src="item.url" frameborder="0"></iframe>
             </el-tab-pane>
+            <el-tab-pane label="svg图标" name="svg">
+              <ul class="icon_lists dib-box">
+                <li class="dib" v-for="(item, index) in svgList" :key="index">
+                  <div class="icon svg-icon" aria-hidden="true" v-html="item.content"></div>
+                  <div class="name">#{{item.name}}</div>
+                </li>
+              </ul>
+            </el-tab-pane>
           </el-tabs>
         </div>
         <div v-show="active != 0 && active != 1">
@@ -52,7 +60,7 @@
 <script>
 import VueMarkdown from 'vue-markdown'
 import getMd from '@/mixins'
-import { getColor } from '@/api'
+import { getColor, getSvg } from '@/api'
 
 export default {
   name: 'About',
@@ -62,7 +70,8 @@ export default {
       active: 0,
       color: {},
       activeName: 'first',
-      iconInfo: []
+      iconInfo: [],
+      svgList: []
     }
   },
   components: {
@@ -72,6 +81,7 @@ export default {
     this.url = this.$route.path
     this.getSideMenu(this.url)
     this.getColor()
+    this.getSvg()
     if (window.config) {
       this.iconInfo = window.config.iconfont
     }
@@ -88,6 +98,13 @@ export default {
       this.active = Number(index)
       if(index != 0) {
         this.getFile(this.sideMenu[index-1])
+      }
+    },
+    async getSvg () {
+      let res = await getSvg()
+      console.log(res)
+      if(res.data.status === 200) {
+        this.svgList = res.data.data
       }
     }
   }
@@ -108,7 +125,7 @@ export default {
       display: flex;
       flex-wrap: wrap;
       .color-item{
-        width: 100px;
+        width: 200px;
         height: 160px;
         margin: 20px;
         border-radius: 6px;
@@ -118,6 +135,8 @@ export default {
         .color{
           width: 100%;
           height: 100px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 6px 6px 0 0;
         }
         .color-txt{
           height: 60px;
@@ -151,6 +170,22 @@ export default {
         }
       }
     }
-  } 
+  }
+  .icon_lists{
+    li{
+      list-style: none;
+      .svg-icon {
+        width: 200px;
+        height: 200px;
+        transform: scale(0.5);
+        svg{
+          width: 100%;
+          height: 100%;
+          fill: currentColor;
+          overflow: hidden;
+        }
+      }
+    }
+  }
 }
 </style>

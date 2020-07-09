@@ -3,12 +3,12 @@ var config = {
   title: '七月',
   iconfont: [
     {
-      url: 'http://127.0.0.1:3000/iconfont/01/demo_index.html',
+      url: 'http://127.0.0.1:8088/iconfont/01/index.html',
       title: '第一个图标文件',
       code: 'first'
     },
     {
-      url: 'http://127.0.0.1:3000/iconfont/01/demo_index.html',
+      url: 'http://127.0.0.1:8088/iconfont/01/index.html',
       title: '第二个图标文件',
       code: 'sencod'
     }

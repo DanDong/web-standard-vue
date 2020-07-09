@@ -27,6 +27,12 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 .container{
   .el-header{
     padding: 0;
@@ -57,6 +63,23 @@ export default {
     }
     li{
       list-style: square inside;
+      &>p{
+        display: inline;
+      }
+      &>ul{
+        margin-left: 20px;
+        li{
+          list-style: circle inside;
+        }
+      }
+      &>ol{
+        margin-left: 20px;
+      }
+    }
+    ol{
+      li{
+        list-style: decimal inside;
+      }
     }
     .contains-task-list{
       li{
@@ -104,11 +127,15 @@ export default {
       border-radius: 6px;
       background: #fafafa;
       padding: 0.3em;
+      line-height: 1.5em;
+    }
+    pre{
+      code{
+        padding: 1.3em;
+      }
     }
     p>code{
       color: #aa0d91;
-      position: relative;
-      top: -2px;
     }
     img{
       display: block;
