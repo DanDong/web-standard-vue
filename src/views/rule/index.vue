@@ -42,7 +42,7 @@
             <el-tab-pane label="svg图标" name="svg">
               <ul class="icon_lists dib-box">
                 <li class="dib" v-for="(item, index) in svgList" :key="index">
-                  <div class="icon svg-icon" aria-hidden="true" v-html="item.content"></div>
+                  <div class="svg-box"><span class="icon svg-icon" v-html="item.content"></span></div>
                   <div class="name">#{{item.name}}</div>
                 </li>
               </ul>
@@ -102,7 +102,6 @@ export default {
     },
     async getSvg () {
       let res = await getSvg()
-      console.log(res)
       if(res.data.status === 200) {
         this.svgList = res.data.data
       }
@@ -164,26 +163,40 @@ export default {
       height: calc(100% - 55px);
       .el-tab-pane{
         height: 100%;
+        overflow: auto;
         .iframe{
           width: 100%;
-          height: 100%;
+          height: 96%;
         }
       }
     }
   }
   .icon_lists{
+    display: flex;
     li{
       list-style: none;
+      width: 100px;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      .svg-box{
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       .svg-icon {
         width: 200px;
         height: 200px;
-        transform: scale(0.5);
-        svg{
-          width: 100%;
-          height: 100%;
-          fill: currentColor;
-          overflow: hidden;
+        transform: scale(0.3);
+        transition: all .25s;
+        &:hover{
+          transform: scale(0.4);
         }
+      }
+      .name {
+        color:#666;
+        text-align: center;
       }
     }
   }

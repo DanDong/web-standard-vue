@@ -77,8 +77,9 @@ html {
       }
     }
     ol{
+      margin: 5px 0;
       li{
-        list-style: decimal inside;
+        list-style: decimal inside !important;
       }
     }
     .contains-task-list{

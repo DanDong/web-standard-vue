@@ -1,4 +1,4 @@
-# dr-standard
+# web-standard-vue 轻量级的前端规范平台-web页面
 
 ## Project setup
 ```
@@ -24,6 +24,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
