@@ -19,19 +19,15 @@ const getSideMenu = (query) => {
   })
 }
 
-// 获取颜色配置
-const getColor = () => {
-  return serve.get('/color')
-}
-
-// 获取颜色配置
-const getSvg = () => {
-  return serve.get('/svg')
+// 获取svg
+const getSvg = (query) => {
+  return serve.get('/svg', {
+    params: query
+  })
 }
 
 export {
   getFile,
   getSideMenu,
-  getColor,
   getSvg
 }

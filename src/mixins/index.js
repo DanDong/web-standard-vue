@@ -6,12 +6,22 @@ export default {
         return {
             md: '',
             sideMenu: [],
-            url: ''
+            url: this.$route.path
+        }
+    },
+    computed: {
+        project(){
+            return this.$store.state.project
+        }
+    },
+    watch: {
+        project(val) {
+            this.init()
         }
     },
     methods: {
-        getSideMenu (url) {
-            const query = { url }
+        getSideMenu (url, project = this.$store.state.project) {
+            const query = { url, project }
             getSideMenu(query).then(res => {
                 if (res.data.status === 200) {
                     this.sideMenu = res.data.data
@@ -19,10 +29,13 @@ export default {
                 } else {
                     this.sideMenu = []
                 }
+            }).catch(_ => {
+                this.sideMenu = []
+                this.md = '加载失败...'
             })
         },
-        getFile (name) {
-            let query = { url: this.url, name }
+        getFile (name, project = this.$store.state.project) {
+            let query = { url: this.url, name, project }
             getFile(query).then(res => {
                 if (res.data.status === 200) {
                     this.md = res.data.data
@@ -30,10 +43,12 @@ export default {
                 } else {
                     this.md = '加载失败...'
                 }
+            }).catch(_ => {
+                this.md = '加载失败...'
             })
         },
         handleSelect (index) {
-            this.getFile(this.sideMenu[index])
+            this.sideMenu.length && this.getFile(this.sideMenu[index])
         },
         highlight () {
             setTimeout(() => {

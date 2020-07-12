@@ -36,8 +36,12 @@ export default {
     VueMarkdown
   },
   mounted() {
-    this.url = this.$route.path
-    this.getSideMenu(this.url)
+    this.init()
+  },
+  methods: {
+    init() {
+      this.getSideMenu(this.url)
+    }
   }
 }
 </script>

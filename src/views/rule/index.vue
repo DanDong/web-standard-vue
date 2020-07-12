@@ -60,7 +60,7 @@
 <script>
 import VueMarkdown from 'vue-markdown'
 import getMd from '@/mixins'
-import { getColor, getSvg } from '@/api'
+import { getSvg } from '@/api'
 
 export default {
   name: 'About',
@@ -78,33 +78,38 @@ export default {
     VueMarkdown
   },
   mounted() {
-    this.url = this.$route.path
-    this.getSideMenu(this.url)
-    this.getColor()
-    this.getSvg()
-    if (window.config) {
-      this.iconInfo = window.config.iconfont
-    }
+    this.init()
   },
   methods: {
+    init() {
+      this.getSideMenu(this.url)
+      this.getColor()
+      this.getSvg()
+      if (window.config) {
+        this.iconInfo = window.config.iconfont[this.project]
+      }
+    },
     getColor () {
-      getColor().then(res => {
-        if(res.data.status === 200) {
-          this.color = res.data.data
-        }
-      })
+      this.color = window.config.color[this.project]
     },
     handleSelect (index) {
       this.active = Number(index)
-      if(index != 0) {
-        this.getFile(this.sideMenu[index-1])
+      if(index != 0 && index != 1) {
+        this.getFile(this.sideMenu[index-2])
       }
     },
     async getSvg () {
-      let res = await getSvg()
-      if(res.data.status === 200) {
-        this.svgList = res.data.data
-      }
+      let query = {project: this.project}
+      getSvg(query).then(res => {
+        if(res.data.status === 200) {
+          this.svgList = res.data.data
+        } else {
+          this.svgList = []
+        }
+      }).catch(_ => {
+        this.svgList = []
+      })
+      
     }
   }
 }
@@ -188,7 +193,7 @@ export default {
       .svg-icon {
         width: 200px;
         height: 200px;
-        transform: scale(0.3);
+        transform: scale(0.2);
         transition: all .25s;
         &:hover{
           transform: scale(0.4);
@@ -196,6 +201,7 @@ export default {
       }
       .name {
         color:#666;
+        font-size: 12px;
         text-align: center;
       }
     }
